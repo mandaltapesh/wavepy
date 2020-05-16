@@ -4,6 +4,7 @@ why-when-import-pygame-it-prints-the-version-and-welcome-message-how-delete-it/5
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
+import time
 
 PIN = 0
 DISPLAY_WIDTH = 300
@@ -18,17 +19,17 @@ board.analog[PIN].mode = INPUT
 values = []
 
 
-def plot_wave(screen, values):
+def plot_wave(screen):
     """
     Function to plot waveform
     :param screen: pygame object
-    :param values: y coordinates, list
     :return: None
     """
     for i in range(0, DISPLAY_WIDTH):
         screen.set_at((i, DISPLAY_HEIGHT - int(values[i] * SCALE_FACTOR)), BLACK)
         print(len(values))
         pygame.display.update()
+    time.sleep(0.5)
     screen.fill(WHITE)
     pygame.display.update()
 
@@ -45,7 +46,6 @@ def main():
 
     while True:
         value = board.analog[PIN].read()
-        # print(value)
         values.append(value)
         if len(values) > DISPLAY_WIDTH:
             values.pop(0)
@@ -55,7 +55,7 @@ def main():
                 print(len(values))
                 pygame.display.update()
         else:
-            plot_wave(screen, values)
+            plot_wave(screen)
 
 
 if __name__ == "__main__":
