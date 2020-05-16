@@ -6,11 +6,11 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 
 PIN = 0
-DISPLAY_WIDTH = 80
-DISPLAY_HEIGHT = 60
+DISPLAY_WIDTH = 300
+DISPLAY_HEIGHT = 300
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-SCALE_FACTOR = 10
+SCALE_FACTOR = 100
 
 board = Arduino('/dev/ttyACM0')
 board.analog[PIN].mode = INPUT
@@ -25,10 +25,12 @@ def plot_wave(screen, values):
     :param values: y coordinates, list
     :return: None
     """
-    for i in range(0, DISPLAY_WIDTH + 1):
+    for i in range(0, DISPLAY_WIDTH):
         screen.set_at((i, DISPLAY_HEIGHT - int(values[i] * SCALE_FACTOR)), BLACK)
         print(len(values))
         pygame.display.update()
+    screen.fill(WHITE)
+    pygame.display.update()
 
 
 def main():
@@ -49,7 +51,7 @@ def main():
             values.pop(0)
         if len(values) < DISPLAY_WIDTH:
             for i in range(0, len(values)):
-                screen.set_at((i, int(values[i] * SCALE_FACTOR)), BLACK)
+                screen.set_at((i, DISPLAY_HEIGHT - int(values[i] * SCALE_FACTOR)), BLACK)
                 print(len(values))
                 pygame.display.update()
         else:
