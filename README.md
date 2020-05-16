@@ -1,0 +1,1 @@
+This is an attempt to create an oscilloscope using pygame for gui and pyfirmata for interfacing with arduino via USB. 
